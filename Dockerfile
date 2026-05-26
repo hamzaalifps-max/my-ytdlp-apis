@@ -1,14 +1,17 @@
-# Use a full Debian Linux environment with Node.js
-FROM node:18-bullseye
+# Use a slim Linux environment with Node.js
+FROM node:18-bullseye-slim
 
-# Install Python 3, Curl, and FFmpeg (all required by yt-dlp)
-RUN apt-get update && apt-get install -y python3 curl ffmpeg && rm -rf /var/lib/apt/lists/*
+# Install Python3, PIP, and FFmpeg
+RUN apt-get update && apt-get install -y python3 python3-pip ffmpeg && rm -rf /var/lib/apt/lists/*
 
-# Set up the app
+# Install the official yt-dlp globally using python PIP
+RUN pip3 install yt-dlp
+
+# Set up the Node app
 WORKDIR /app
-COPY package.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 
-# Start the server
+# Run the server
 CMD ["node", "index.js"]
