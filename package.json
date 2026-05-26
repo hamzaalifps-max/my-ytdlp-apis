@@ -4,7 +4,7 @@
   "description": "A simple Node.js API to fetch YouTube download links using yt-dlp.",
   "main": "index.js",
   "scripts": {
-    "prestart": "curl -L -o node_modules/youtube-dl-exec/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux && chmod +x node_modules/youtube-dl-exec/bin/yt-dlp",
+    "prestart": "mkdir -p node_modules/youtube-dl-exec/bin && curl -L -o node_modules/youtube-dl-exec/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux && chmod +x node_modules/youtube-dl-exec/bin/yt-dlp",
     "start": "node index.js"
   },
   "dependencies": {
