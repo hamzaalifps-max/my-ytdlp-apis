@@ -1,5 +1,5 @@
 /**
- * yt-dlp API Microservice – (Using Global PIP yt-dlp + Anti-Bot Bypass)
+ * yt-dlp API Microservice – (Fully Auto-Bypass Edition)
  */
 
 'use strict';
@@ -14,22 +14,20 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
-
 function extractVideoInfo(url) {
   return new Promise((resolve, reject) => {
+    // Let yt-dlp dynamically generate the perfect headers for the request.
+    // The "tv" and "android" clients usually completely bypass datacenter IP bot checks.
     const args = [
-      '-J', // dump JSON
+      '-J',
       '--no-playlist',
       '--no-warnings',
       '--no-check-certificates',
       '--skip-download',
-      '--add-header', `user-agent:${USER_AGENT}`,
-      '--extractor-args', 'youtube:player_client=android',
+      '--extractor-args', 'youtube:player_client=tv,android,web_creator',
       url
     ];
 
-    // Execute the global yt-dlp installed via python PIP
     execFile('yt-dlp', args, { maxBuffer: 1024 * 1024 * 50 }, (error, stdout, stderr) => {
       if (error) {
         return reject({ error, stderr, stdout });
@@ -57,7 +55,7 @@ function isValidUrl(value) {
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.json({ status: 'ok', version: 'Standalone-2026-AntiBot' });
+  res.json({ status: 'ok', version: 'Standalone-2026-FullyAutoBypass' });
 });
 
 router.get('/info', async (req, res) => {
