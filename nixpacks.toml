@@ -1,5 +1,2 @@
-[providers]
-  node = {}
-  python = {}
 [phases.setup]
 aptPkgs = ["curl", "python3"]
