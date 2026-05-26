@@ -1,5 +1,5 @@
 /**
- * yt-dlp API Microservice – (Cookies Edition)
+ * yt-dlp API Microservice – (Cookies Edition, Conflict Fix)
  */
 
 'use strict';
@@ -16,8 +16,8 @@ app.use(express.json());
 
 function extractVideoInfo(url) {
   return new Promise((resolve, reject) => {
-    // We must pass cookies to bypass the YouTube server bot block.
-    // We prioritize the "ios" and "tv" clients to unlock 1080p, 4K, and audio-only streams.
+    // We are passing cookies.txt to bypass YouTube's bot detection.
+    // Removed player_client args to prevent the "reload page" conflict.
     const args = [
       '-J',
       '--no-playlist',
@@ -25,7 +25,6 @@ function extractVideoInfo(url) {
       '--no-check-certificates',
       '--skip-download',
       '--cookies', 'cookies.txt',
-      '--extractor-args', 'youtube:player_client=ios,tv,web_creator',
       url
     ];
 
@@ -56,7 +55,7 @@ function isValidUrl(value) {
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.json({ status: 'ok', version: 'Standalone-2026-CookiesEdition' });
+  res.json({ status: 'ok', version: 'Standalone-2026-CookiesFix' });
 });
 
 router.get('/info', async (req, res) => {
