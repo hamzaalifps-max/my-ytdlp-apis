@@ -1,5 +1,5 @@
 /**
- * yt-dlp API Microservice – (Using Global PIP yt-dlp)
+ * yt-dlp API Microservice – (Using Global PIP yt-dlp + Anti-Bot Bypass)
  */
 
 'use strict';
@@ -25,6 +25,7 @@ function extractVideoInfo(url) {
       '--no-check-certificates',
       '--skip-download',
       '--add-header', `user-agent:${USER_AGENT}`,
+      '--extractor-args', 'youtube:player_client=android',
       url
     ];
 
@@ -56,7 +57,7 @@ function isValidUrl(value) {
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.json({ status: 'ok', version: 'Standalone-2026-Global-PIP' });
+  res.json({ status: 'ok', version: 'Standalone-2026-AntiBot' });
 });
 
 router.get('/info', async (req, res) => {
